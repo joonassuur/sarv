@@ -1,9 +1,6 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 
 export default createMuiTheme({
-    contentMaxWidth: "1200px",
-    settingsContentMaxWidth: "600px",
-
     palette: {
       primary: {
         main: "#0737A0",
@@ -18,6 +15,7 @@ export default createMuiTheme({
       },
     },
     typography: {
+      fontSize: 14,
       fontFamily: "Roboto, sans-serif",
       h4: {
         fontWeight: "bold",
@@ -34,9 +32,10 @@ export default createMuiTheme({
     },
 
     overrides: {
-      MuiContainer: {
+      MuiContainer: {      
         root: {
-          paddingTop: "20px"
+          paddingTop: "20px",
+          maxWidth: "1200px !important"
         }
       },
       MuiPagination: {

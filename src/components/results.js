@@ -7,9 +7,8 @@ import {
     TableHead, 
     TableRow,
     TablePagination,
-    TextField
+    TextField,
 } from '@material-ui/core';
-
 
 export default function Results({searchResults}) {
     const [page, setPage] = useState(0);

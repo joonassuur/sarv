@@ -4,7 +4,7 @@ import {
   Route,
 } from "react-router-dom";
 import { ThemeProvider } from '@material-ui/core/styles';
-import { TextField, Container, Paper, Card, CardContent } from '@material-ui/core';
+import { Container, Paper, Card, CardContent } from '@material-ui/core';
 import Pagination from '@material-ui/lab/Pagination';
 
 import theme from './styles/theme.js'
@@ -23,7 +23,6 @@ function App() {
 
   const prevInputRef = useRef();
   const prevInput = prevInputRef.current;
-
 
   useEffect(()=> {
     const areEqualShallow = () => {

@@ -3,7 +3,7 @@ export const sendRequest = async (input, page) => {
 
   for (let [key, value] of Object.entries(input)) {
     if (value){
-      if (paramArr.length<1) {
+      if (paramArr.length < 1) {
         paramArr.push(`&${key}=${value}`) 
       } else {
         paramArr.push(`${key}=${value}`) 

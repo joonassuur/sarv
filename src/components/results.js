@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState,useEffect} from 'react';
 import {
     Table, 
     TableBody, 
@@ -7,23 +7,63 @@ import {
     TableHead, 
     TableRow,
     TablePagination,
+    TextField
 } from '@material-ui/core';
 
 
 export default function Results({searchResults}) {
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);  
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10); 
+    const [totalResultsCount, setTotalResultsCount] = useState(0);
+
+    const [results, setResults] = useState("")
+    const [localityFilter, setLocalityFilter] = useState("")
 
     const handleChangePage = (event, newPage) => {
       setPage(newPage);
     };
+
+    useEffect(()=> {
+      if (localityFilter) {
+        let filter =          
+            results
+            .filter(e => e.locality?.toLowerCase().includes(localityFilter.toLowerCase()))
+            setResults(filter)
+            return;
+      }
+      setResults(searchResults?.results)
+      
+    }, [localityFilter])
+
+    useEffect(()=> {
+      if(localityFilter) {
+        let filter =          
+            searchResults.results
+            .filter(e => e.locality?.toLowerCase().includes(localityFilter.toLowerCase()))
+        setResults(filter)
+        return;
+      }
+      setResults(searchResults?.results)
+      
+    }, [searchResults])
+
+    useEffect(()=> {
+      if (results)
+        setTotalResultsCount(results?.length)
+    }, [results])
   
     const handleChangeRowsPerPage = (event) => {
       setRowsPerPage(+event.target.value);
       setPage(0);
     };
-    return searchResults && (
+
+    return results ? (
         <TableContainer>
+            <TextField 
+              id="filter-locality" 
+              label="filter locality" 
+              onChange={(e)=>setLocalityFilter(e.target.value)}
+            />
             <Table aria-label="simple table">
               <TableHead>
                 <TableRow>
@@ -31,11 +71,12 @@ export default function Results({searchResults}) {
                   <TableCell align="right">Latitude</TableCell>
                   <TableCell align="right">Longitude</TableCell>
                   <TableCell align="right">Locality</TableCell>
+                  <TableCell align="right">County</TableCell>
                   <TableCell align="right">Country</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {searchResults.results?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                {results?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row) => (
                   <TableRow key={row.id}>
                     <TableCell component="th" scope="row">
@@ -44,6 +85,7 @@ export default function Results({searchResults}) {
                     <TableCell align="right">{row.latitude || "-"}</TableCell>
                     <TableCell align="right">{row.longitude || "-"}</TableCell>
                     <TableCell align="right">{row.locality || "-"}</TableCell>
+                    <TableCell align="right">{row.maakond__maakond || "-"}</TableCell>
                     <TableCell align="right">{row.country__value || "-"}</TableCell>
                   </TableRow>
                 ))}
@@ -52,12 +94,12 @@ export default function Results({searchResults}) {
             <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
                 component="div"
-                count={searchResults.results?.length || 0}
+                count={totalResultsCount || 0}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onChangePage={handleChangePage}
                 onChangeRowsPerPage={handleChangeRowsPerPage}
             />
         </TableContainer>
-    )
+    ) : null
 }

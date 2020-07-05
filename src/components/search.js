@@ -9,7 +9,7 @@ export default function Search(props) {
 
     const [latitude, setLatitude] = useState("");
     const [longitude, setLongitude] = useState("");
-    const [maakond__maakond, setMaakond] = useState("");
+    const [locality, setLocality] = useState("");
     const [country__value, setCountryValue] = useState("");
     
 
@@ -46,15 +46,15 @@ export default function Search(props) {
             />
             <TextField 
                 id="locality-input" 
-                label="Maakond" 
+                label="Locality (EE)" 
                 variant="outlined" 
                 className={classes().searchField}
-                onChange={(e)=>setMaakond(e.target.value)} 
-                value={maakond__maakond}
+                onChange={(e)=>setLocality(e.target.value)} 
+                value={locality}
             />
             <TextField 
                 id="countryValue-input" 
-                label="Country" 
+                label="Country (EE)" 
                 variant="outlined" 
                 className={classes().searchField}
                 onChange={(e)=>setCountryValue(e.target.value)} 
@@ -67,7 +67,7 @@ export default function Search(props) {
                     className={classes().button}
                     onClick={
                         ()=> props.searchQuery(
-                                {latitude, longitude, maakond__maakond, country__value}
+                                {latitude, longitude, locality, country__value}
                         )
                     }
                 >
@@ -83,7 +83,7 @@ export default function Search(props) {
                             setLatitude("")
                             setLongitude("")
                             setLatitude("")
-                            setMaakond("")
+                            setLocality("")
                             setCountryValue("")
                         }
                     }

@@ -23,6 +23,7 @@ export default function Results({searchResults}) {
     };
 
     useEffect(()=> {
+      //apply filter on currently selected page
       if (localityFilter) {
         let filter =          
             results
@@ -35,6 +36,7 @@ export default function Results({searchResults}) {
     }, [localityFilter])
 
     useEffect(()=> {
+      //keep the filter on after page change api call
       if(localityFilter) {
         let filter =          
             searchResults.results
@@ -42,11 +44,14 @@ export default function Results({searchResults}) {
         setResults(filter)
         return;
       }
+      
+      //set results after search/page hange
       setResults(searchResults?.results)
       
     }, [searchResults])
 
     useEffect(()=> {
+      //set total results for current page
       if (results)
         setTotalResultsCount(results?.length)
     }, [results])

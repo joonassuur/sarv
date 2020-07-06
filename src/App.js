@@ -25,6 +25,7 @@ function App() {
   const prevInput = prevInputRef.current;
 
   useEffect(()=> {
+    //compare if search input object is the same as previous search input
     const areEqualShallow = () => {
       for(let key in prevInput) {
           if(prevInput[key] !== searchQuery[key]) {
@@ -35,12 +36,14 @@ function App() {
     }
     prevInputRef.current = searchQuery
 
+    //make api call and apply page change if submitted search input is same
     if(searchQuery && areEqualShallow()) {
       (async ()=> 
         setSearchResults(await sendRequest(searchQuery, currentPage))
       )()
     }
 
+    //if submitted search inputs are different, make api call and return to page 1
     if (searchQuery && !areEqualShallow()) {
       setCurrentPage(1)
       const x = async ()=> 
@@ -52,6 +55,7 @@ function App() {
 
   useEffect(()=> {
     if (searchResults) {
+      //set absolute page count for current search results
       setTotalPages(parseInt(searchResults.page?.slice(10)))
     }
   }, [searchResults, totalPages])

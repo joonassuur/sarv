@@ -3,6 +3,7 @@ export const sendRequest = async (input, page) => {
 
   for (let [key, value] of Object.entries(input)) {
     if (value){
+      //push filled textbox keys and values into paramArr
       if (paramArr.length < 1) {
         paramArr.push(`&${key}=${value}`) 
       } else {
@@ -11,6 +12,7 @@ export const sendRequest = async (input, page) => {
     }
   }
   
+  //make the request with values from paramArr and page variable
   const API = `https://api.geocollections.info/locality/?page=${page}${paramArr.join("&")}`;
 
   const response = await fetch(API, {
